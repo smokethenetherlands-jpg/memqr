@@ -1,0 +1,1500 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Левкина Валентина Ивановна - Страница памяти</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#0c0a08;
+  --bg2:#111009;
+  --card:#161410;
+  --border:#272318;
+  --gold:#c9a055;
+  --gold2:#e8c97a;
+  --gold-glow:rgba(201,160,85,.18);
+  --text:#c4beb4;
+  --muted:#5a5448;
+  --light:#f0e8d8;
+  --r:10px;
+  --nav-bg:rgba(12,10,8,.88);
+  --vignette:rgba(12,10,8,.85);
+}
+
+/* ── LIGHT THEME ── */
+html.light{
+  --bg:#f7f5f1;
+  --bg2:#ede9e2;
+  --card:#ffffff;
+  --border:#ddd5c8;
+  --gold:#8a6e82;
+  --gold2:#b099aa;
+  --gold-glow:rgba(138,110,130,.14);
+  --text:#3c3430;
+  --muted:#9a8e86;
+  --light:#1c1714;
+  --nav-bg:rgba(247,245,241,.92);
+  --vignette:rgba(247,245,241,.5);
+}
+html.light ::-webkit-scrollbar-track{background:var(--bg)}
+html.light .hero-vignette{
+  background:radial-gradient(ellipse at center,transparent 30%,var(--vignette) 100%);
+}
+html.light .map-wrap iframe{filter:none}
+
+/* ── THEME TOGGLE ── */
+.theme-toggle{
+  display:flex;align-items:center;gap:8px;cursor:pointer;
+  background:none;border:none;padding:0;
+}
+.theme-toggle-track{
+  width:36px;height:20px;border-radius:10px;
+  background:var(--border);
+  position:relative;transition:background .3s;
+  flex-shrink:0;
+}
+html.light .theme-toggle-track{background:var(--gold)}
+.theme-toggle-thumb{
+  position:absolute;top:3px;left:3px;
+  width:14px;height:14px;border-radius:50%;
+  background:var(--gold);
+  transition:transform .3s, background .3s;
+  box-shadow:0 1px 4px rgba(0,0,0,.3);
+}
+html.light .theme-toggle-thumb{transform:translateX(16px);background:#fff}
+.theme-toggle-icon{font-size:14px;line-height:1;user-select:none}
+
+html{scroll-behavior:smooth}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px;opacity:.5}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  font-weight:300;
+  overflow-x:hidden;
+}
+img{max-width:100%;display:block}
+a{color:var(--gold);text-decoration:none}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:99;
+  background:var(--nav-bg);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 32px;height:52px;
+  transition:background .4s;
+}
+.nav-brand{
+  font-family:'Cormorant Garamond',serif;
+  font-size:.95rem;font-weight:400;letter-spacing:.12em;
+  color:var(--gold);opacity:.8;
+}
+.nav-links{display:flex;gap:0;list-style:none}
+.nav-links a{
+  font-size:.7rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;
+  padding:6px 12px;border-radius:4px;transition:.2s;
+}
+.nav-links a:hover{color:var(--gold)}
+.nav-dots{display:flex;gap:8px;align-items:center}
+.nav-dot{
+  width:6px;height:6px;border-radius:50%;background:var(--border);
+  cursor:pointer;transition:.3s;
+}
+.nav-dot.active{background:var(--gold);transform:scale(1.3)}
+@media(max-width:700px){.nav-links{display:none}}
+
+/* ── HERO ── */
+.hero{
+  position:relative;min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+#starCanvas{
+  position:absolute;inset:0;width:100%;height:100%;
+  pointer-events:none;z-index:0;
+}
+.hero-vignette{
+  position:absolute;inset:0;z-index:1;
+  background:radial-gradient(ellipse at center,transparent 30%,rgba(12,10,8,.85) 100%);
+  pointer-events:none;
+}
+.hero-content{
+  position:relative;z-index:2;
+  text-align:center;padding:52px 24px 0;
+  max-width:700px;
+}
+.hero-label{
+  font-size:.68rem;letter-spacing:.35em;text-transform:uppercase;
+  color:var(--gold);opacity:.6;margin-bottom:32px;
+  animation:fadeUp .8s ease both;animation-delay:.2s;
+}
+.hero-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.8rem,8vw,5.5rem);
+  font-weight:300;color:var(--light);line-height:1.1;
+  margin-bottom:24px;min-height:1.1em;
+}
+.cursor{
+  display:inline-block;width:2px;height:.85em;
+  background:var(--gold);margin-left:4px;vertical-align:middle;
+  animation:blink .8s step-end infinite;
+}
+.hero-divider{
+  width:60px;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);
+  margin:0 auto 24px;
+  animation:expandW .8s ease both;animation-delay:1.8s;transform-origin:center;
+}
+.hero-dates{
+  font-size:.9rem;letter-spacing:.25em;color:var(--muted);
+  margin-bottom:28px;
+  opacity:0;animation:fadeUp .6s ease both;animation-delay:2s;
+}
+.hero-epitaph{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:1.3rem;font-weight:300;color:var(--text);line-height:1.7;
+  opacity:0;animation:fadeUp .6s ease both;animation-delay:2.3s;
+}
+.hero-scroll{
+  position:absolute;bottom:36px;left:0;right:0;
+  z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;
+  opacity:0;animation:fadeUp .6s ease both;animation-delay:2.8s;
+}
+.hero-scroll span{font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:var(--muted)}
+.scroll-arrow{
+  width:1px;height:36px;background:linear-gradient(to bottom,var(--gold),transparent);
+  animation:scrollPulse 2s ease-in-out infinite;
+}
+
+/* ── SECTIONS ── */
+.section{padding:100px 0}
+.section.alt{background:var(--bg2)}
+.container{max-width:1060px;margin:0 auto;padding:0 40px}
+
+.sec-head{margin-bottom:64px}
+.sec-eyebrow{
+  font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--gold);opacity:.7;margin-bottom:12px;
+  display:flex;align-items:center;gap:12px;
+}
+.sec-eyebrow::after{content:'';flex:1;max-width:40px;height:1px;background:var(--gold);opacity:.4}
+.sec-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.8rem,5vw,3rem);
+  font-weight:300;color:var(--light);
+  clip-path:inset(0 0% 0 0);
+  transition:clip-path .9s cubic-bezier(.22,1,.36,1);
+}
+.sec-title.revealed{clip-path:inset(0 0% 0 0)}
+
+/* reveal helpers */
+.fade-up{
+  opacity:0;transform:translateY(28px);
+  transition:opacity .7s ease,transform .7s ease;
+}
+.fade-up.on{opacity:1;transform:none}
+.stagger-1{transition-delay:.1s}
+.stagger-2{transition-delay:.2s}
+.stagger-3{transition-delay:.3s}
+.stagger-4{transition-delay:.4s}
+.stagger-5{transition-delay:.5s}
+.stagger-6{transition-delay:.6s}
+
+/* ── TIMELINE vertical alternating ── */
+.tl-wrap{position:relative;padding:0 0 0 0}
+.tl-line{
+  position:absolute;left:50%;top:0;bottom:0;width:1px;
+  background:var(--border);transform:translateX(-50%);
+}
+.tl-progress{
+  position:absolute;left:50%;top:0;width:1px;
+  background:linear-gradient(to bottom,var(--gold),transparent);
+  transform:translateX(-50%);height:0;transition:height .1s linear;
+}
+.tl-item{
+  display:grid;grid-template-columns:1fr 52px 1fr;
+  gap:0;margin-bottom:56px;align-items:start;
+}
+.tl-item:nth-child(odd) .tl-text-block{grid-column:1;text-align:right;padding-right:32px}
+.tl-item:nth-child(odd) .tl-spacer{grid-column:2}
+.tl-item:nth-child(odd) .tl-empty{grid-column:3}
+.tl-item:nth-child(even) .tl-empty{grid-column:1}
+.tl-item:nth-child(even) .tl-spacer{grid-column:2}
+.tl-item:nth-child(even) .tl-text-block{grid-column:3;padding-left:32px}
+.tl-dot{
+  width:10px;height:10px;border-radius:50%;
+  background:var(--bg);border:1px solid var(--gold);
+  margin:6px auto 0;position:relative;z-index:2;
+  transition:.4s;
+}
+.tl-item.on .tl-dot{background:var(--gold);box-shadow:0 0 12px var(--gold)}
+.tl-year{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.8rem;font-weight:300;color:var(--gold);opacity:.25;
+  line-height:1;margin-bottom:8px;
+}
+.tl-body{font-size:.88rem;line-height:1.75;color:var(--text)}
+.tl-title{font-size:.82rem;font-weight:500;color:var(--light);letter-spacing:.05em;margin-bottom:6px}
+@media(max-width:640px){
+  .tl-wrap{padding:0}
+  .tl-line,.tl-progress{left:20px}
+  .tl-item{grid-template-columns:40px 1fr}
+  .tl-item:nth-child(odd) .tl-text-block,
+  .tl-item:nth-child(even) .tl-text-block{grid-column:2;text-align:left;padding:0 0 0 16px}
+  .tl-item:nth-child(odd) .tl-spacer,
+  .tl-item:nth-child(even) .tl-spacer{grid-column:1}
+  .tl-item:nth-child(odd) .tl-empty,
+  .tl-item:nth-child(even) .tl-empty{display:none}
+  .tl-year{font-size:2rem}
+}
+
+/* ── BIO ── */
+.bio-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:64px;align-items:start}
+@media(max-width:700px){.bio-grid{grid-template-columns:1fr}}
+
+.bio-photo-wrap{position:sticky;top:80px}
+.bio-photo-frame{
+  position:relative;
+  border:1px solid var(--border);
+  border-radius:var(--r);overflow:hidden;
+}
+.bio-photo-frame img{
+  width:100%;aspect-ratio:3/4;object-fit:cover;
+  filter:sepia(30%) contrast(1.05);
+  transition:.6s;
+}
+.bio-photo-frame:hover img{filter:sepia(10%)}
+.bio-photo-frame::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(12,10,8,.6),transparent 50%);
+}
+.bio-photo-caption{
+  position:absolute;bottom:0;left:0;right:0;z-index:2;
+  padding:20px;font-size:.72rem;letter-spacing:.1em;color:rgba(240,232,216,.6);
+}
+.bio-facts{margin-top:24px;display:flex;flex-direction:column;gap:0}
+.bio-fact{
+  padding:13px 0;border-bottom:1px solid var(--border);
+  display:flex;flex-direction:column;gap:3px;
+}
+.bio-fact-label{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);opacity:.7}
+.bio-fact-value{font-size:.85rem;color:var(--text)}
+
+.bio-text p{
+  font-size:.95rem;line-height:1.9;color:var(--text);
+  margin-bottom:24px;
+}
+.bio-text p:last-child{margin-bottom:0}
+.bio-chapter{
+  display:flex;align-items:center;gap:16px;
+  margin:36px 0 20px;
+}
+.bio-chapter::before,.bio-chapter::after{
+  content:'';flex:1;height:1px;background:var(--border);
+}
+.bio-chapter-label{
+  font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--gold);opacity:.65;white-space:nowrap;
+}
+.bio-pull{
+  border-left:2px solid var(--gold);
+  padding:14px 20px;margin:24px 0;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:1.1rem;line-height:1.75;color:var(--light);
+}
+.bio-drop{
+  font-family:'Cormorant Garamond',serif;
+  font-size:3.2rem;font-weight:400;color:var(--gold);
+  float:left;line-height:.8;margin:6px 8px 0 0;
+}
+
+/* ── GALLERY ── */
+.gal-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+}
+@media(max-width:640px){.gal-grid{grid-template-columns:repeat(2,1fr)}}
+.gal-item{
+  position:relative;overflow:hidden;border-radius:var(--r);
+  cursor:pointer;aspect-ratio:3/4;border:1px solid var(--border);
+}
+.gal-item:nth-child(2){aspect-ratio:3/5}
+.gal-item:nth-child(5){aspect-ratio:4/3;grid-column:span 2}
+.gal-item img{
+  width:100%;height:100%;object-fit:cover;
+  filter:sepia(20%);
+  transform:scale(1.05);transition:.6s cubic-bezier(.22,1,.36,1);
+}
+.gal-item:hover img{transform:scale(1);filter:sepia(0%)}
+.gal-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(12,10,8,.85) 0%,transparent 50%);
+  opacity:1;transition:.4s;
+  display:flex;align-items:flex-end;padding:18px;
+}
+.gal-item:hover .gal-overlay{opacity:1}
+.gal-overlay span{
+  font-size:.72rem;letter-spacing:.1em;color:var(--gold2);
+  transform:none;transition:.4s .05s;
+}
+.gal-item:hover .gal-overlay span{transform:none}
+
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.96);z-index:1000;align-items:center;justify-content:center;cursor:pointer}
+.lightbox.on{display:flex}
+.lightbox img{max-width:90vw;max-height:90vh;border-radius:var(--r)}
+.lb-close{position:absolute;top:16px;right:20px;background:none;border:none;color:#888;font-size:1.2rem;cursor:pointer;letter-spacing:.1em;font-family:'Inter',sans-serif}
+
+/* ── TREE ── */
+.tree-section{background:var(--bg)}
+.ftree-outer{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:8px 0 16px}
+.ftree-container{position:relative;width:600px;height:540px;margin:0 auto}
+.ftree-svg{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none}
+.fnode{position:absolute;width:80px;text-align:center}
+.fnode-img{width:56px;height:56px;border-radius:50%;object-fit:cover;border:1px solid var(--border);margin:0 auto;display:block;background:var(--card);transition:border-color .3s,opacity .3s}
+.fnode.main .fnode-img{width:68px;height:68px;border:1.5px solid var(--gold);box-shadow:0 0 22px var(--gold-glow)}
+.fnode.dim .fnode-img{opacity:.45}
+.fnode.dim:hover .fnode-img{opacity:.7;border-color:var(--muted)}
+.fnode-name{font-size:.6rem;font-weight:400;color:var(--muted);line-height:1.35;margin-top:7px}
+.fnode.main .fnode-name{color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:.78rem;font-style:italic}
+.fnode-dates{font-size:.55rem;color:var(--muted);margin-top:2px;opacity:.6}
+.fnode.main .fnode-dates{color:var(--gold);opacity:.5}
+.ftree-gen-label{position:absolute;left:5px;font-size:.52rem;letter-spacing:.12em;color:var(--muted);opacity:.35;font-family:'Cormorant Garamond',serif}
+
+/* ── MAP ── */
+.map-wrap{border-radius:var(--r);overflow:hidden;height:360px;border:1px solid var(--border);position:relative}
+.map-wrap iframe{width:100%;height:100%;border:none;filter:invert(88%) hue-rotate(180deg) saturate(.5)}
+.map-label{font-size:.8rem;color:var(--muted);margin-bottom:16px;letter-spacing:.08em}
+
+/* ── TRIBUTES ── */
+.tributes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.tribute-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r);padding:24px;
+  border-left:2px solid transparent;
+  transition:.3s;
+}
+.tribute-card:hover{border-left-color:var(--gold);transform:translateY(-2px)}
+.tribute-meta{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.tribute-name{font-weight:500;font-size:.85rem;color:var(--gold)}
+.tribute-rel{font-size:.68rem;color:var(--muted);background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:2px 8px}
+.tribute-date{font-size:.67rem;color:var(--muted);margin-left:auto}
+.tribute-text{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:.97rem;line-height:1.8;color:var(--text);
+}
+.tribute-quote{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.4rem;color:var(--gold);opacity:.2;
+  line-height:.7;margin-bottom:8px;
+}
+
+.tribute-form-wrap{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r);padding:32px;margin-bottom:40px;
+}
+.form-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--light);margin-bottom:20px}
+.t-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+@media(max-width:500px){.t-row{grid-template-columns:1fr}}
+input,textarea{
+  width:100%;background:var(--bg);border:1px solid var(--border);
+  border-radius:8px;padding:11px 14px;
+  color:var(--text);font-family:inherit;font-size:.85rem;outline:none;transition:.2s;
+}
+input:focus,textarea:focus{border-color:var(--gold)}
+input::placeholder,textarea::placeholder{color:var(--muted)}
+textarea{resize:vertical;min-height:100px;margin-bottom:14px}
+.t-btn{
+  background:transparent;border:1px solid var(--gold);color:var(--gold);
+  border-radius:8px;padding:11px 28px;font-family:inherit;font-size:.82rem;
+  letter-spacing:.08em;cursor:pointer;transition:.25s;
+}
+.t-btn:hover{background:var(--gold);color:var(--bg)}
+
+/* ── CANDLE ── */
+.candle-section{
+  min-height:80vh;display:flex;align-items:center;
+  background:var(--bg);position:relative;overflow:hidden;
+}
+.candle-bg{
+  position:absolute;inset:0;z-index:0;
+  background:radial-gradient(ellipse at 50% 60%,rgba(201,160,85,.06),transparent 70%);
+}
+#sparksCanvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.candle-inner{position:relative;z-index:2;text-align:center;width:100%}
+.candle-heading{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.8rem,5vw,3rem);font-weight:300;
+  color:var(--light);margin-bottom:12px;
+}
+.candle-sub{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:1.05rem;color:var(--muted);margin-bottom:48px;
+}
+.candle-el{
+  display:flex;flex-direction:column;align-items:center;
+  gap:0;margin:0 auto 32px;width:fit-content;
+}
+.flame-wrap{
+  width:28px;height:44px;position:relative;
+  opacity:0;transform:scaleY(0);transform-origin:bottom;
+  transition:opacity .4s,transform .4s cubic-bezier(.34,1.56,.64,1);
+}
+.candle-el.lit .flame-wrap{opacity:1;transform:scaleY(1)}
+.flame-outer{
+  position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+  width:20px;height:38px;
+  background:radial-gradient(ellipse at 50% 90%,#ffe066,#ff8c00 45%,#cc4400 75%,transparent);
+  border-radius:50% 50% 30% 30%;
+  animation:flameFlicker 1.8s ease-in-out infinite alternate;
+  filter:blur(.5px);
+}
+.flame-inner{
+  position:absolute;bottom:4px;left:50%;transform:translateX(-50%);
+  width:8px;height:18px;
+  background:radial-gradient(ellipse at 50% 90%,#fff8e0,#ffe066 60%,transparent);
+  border-radius:50% 50% 30% 30%;
+  animation:flameFlicker 1.4s ease-in-out infinite alternate-reverse;
+}
+.wick{width:2px;height:10px;background:#2a1f0e;margin:0 auto;border-radius:1px}
+.wax-body{
+  width:28px;height:80px;
+  background:linear-gradient(180deg,#f0e8d0,#d4c4a0 50%,#b8a880);
+  border-radius:5px 5px 3px 3px;
+  box-shadow:inset -4px 0 8px rgba(0,0,0,.15);
+  position:relative;
+}
+.wax-body::after{
+  content:'';position:absolute;top:6px;left:50%;transform:translateX(-50%);
+  width:2px;height:10px;background:rgba(50,30,10,.4);border-radius:1px;
+}
+.wax-base{width:36px;height:7px;background:linear-gradient(180deg,#c4b490,#a89870);border-radius:0 0 5px 5px}
+.glow-ring{
+  width:60px;height:60px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,200,50,.2),transparent 70%);
+  margin:-24px auto 0;
+  opacity:0;transition:.5s;
+}
+.candle-el.lit .glow-ring{opacity:1}
+
+.c-btn{
+  background:transparent;border:1px solid rgba(201,160,85,.4);
+  color:var(--muted);border-radius:50px;
+  padding:12px 36px;font-family:inherit;font-size:.82rem;
+  letter-spacing:.12em;text-transform:uppercase;
+  cursor:pointer;transition:.3s;
+}
+.c-btn:hover,.c-btn.on{
+  border-color:var(--gold);color:var(--gold);
+  box-shadow:0 0 20px rgba(201,160,85,.15);
+}
+.c-count{
+  margin-top:20px;font-size:.72rem;color:var(--muted);
+  letter-spacing:.1em;
+}
+.c-count-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem;color:var(--gold);
+}
+
+/* ── QR ── */
+.qr-section{padding:80px 0;border-top:1px solid var(--border)}
+.qr-inner{display:flex;flex-direction:column;align-items:center;gap:20px}
+.qr-canvas{background:#fff;padding:12px;border-radius:var(--r);display:inline-block}
+.qr-btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.qr-btn{
+  background:transparent;border:1px solid var(--border);color:var(--muted);
+  border-radius:8px;padding:9px 20px;font-family:inherit;font-size:.78rem;
+  letter-spacing:.06em;cursor:pointer;transition:.2s;
+}
+.qr-btn:hover{border-color:var(--gold);color:var(--gold)}
+.qr-url{font-size:.68rem;color:var(--muted);word-break:break-all;max-width:340px;text-align:center}
+
+/* ── FOOTER ── */
+footer{
+  padding:40px;text-align:center;
+  border-top:1px solid var(--border);
+}
+.footer-love{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:1rem;color:var(--muted);margin-bottom:10px;
+}
+footer a{color:var(--muted);font-size:.78rem;transition:.2s}
+footer a:hover{color:var(--gold)}
+
+/* ── KEYFRAMES ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes expandW{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes blink{50%{opacity:0}}
+@keyframes scrollPulse{0%,100%{opacity:.4;transform:scaleY(1)}50%{opacity:1;transform:scaleY(1.15)}}
+@keyframes flameFlicker{
+  0%{transform:translateX(-50%) scaleX(1) rotate(-1deg)}
+  33%{transform:translateX(-50%) scaleX(.92) scaleY(1.06) rotate(1.5deg)}
+  66%{transform:translateX(-50%) scaleX(1.08) scaleY(.95) rotate(-1deg)}
+  100%{transform:translateX(-50%) scaleX(.96) rotate(2deg)}
+}
+
+/* ── MEMORIES ── */
+.mem-subsection{
+  margin:56px 0 28px;
+  display:flex;align-items:center;gap:20px;
+}
+.mem-subsection-line{flex:1;height:1px;background:var(--border)}
+.mem-subsection-label{
+  font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--gold);white-space:nowrap;
+}
+.mem-main-grid{display:flex;flex-direction:column;gap:2px}
+.mem-card{
+  border-left:2px solid var(--border);
+  padding:28px 0 28px 28px;
+  transition:border-color .3s;
+}
+.mem-card:hover{border-left-color:var(--gold)}
+.mem-card-title{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:1.3rem;font-weight:400;color:var(--light);
+  margin-bottom:6px;
+}
+.mem-card-author{
+  font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold);opacity:.7;margin-bottom:14px;
+}
+.mem-card-text{font-size:.9rem;line-height:1.8;color:var(--text)}
+.mem-detail-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:2px;
+}
+@media(max-width:600px){.mem-detail-grid{grid-template-columns:1fr}}
+
+/* ── MOBILE ── */
+@media(max-width:480px){
+  .container{padding:0 20px}
+  .section{padding:64px 0}
+  .section.alt{padding:64px 0}
+
+  .hero-content{padding:40px 20px 0}
+  .hero-scroll{bottom:24px}
+  .hero-epitaph{font-size:1.1rem}
+
+  nav{padding:0 16px}
+  .nav-brand{font-size:.65rem}
+
+  .sec-head{margin-bottom:40px}
+  .sec-title{font-size:1.6rem}
+
+  .bio-grid{gap:32px}
+  .bio-facts-grid{grid-template-columns:1fr 1fr}
+  .bio-photo-wrap{position:static}
+
+  .gal-grid{grid-template-columns:repeat(2,1fr);gap:6px}
+
+  .tribute-form-wrap{padding:20px}
+
+  .candle-section{min-height:60vh}
+  .candle-heading{font-size:1.8rem}
+
+  .qr-section{padding:48px 0}
+  .qr-url{font-size:.62rem}
+
+  footer{padding:32px 20px}
+
+  .mem-card{padding:20px 0 20px 20px}
+  .mem-card-title{font-size:1.1rem}
+
+  .tributes-grid{grid-template-columns:1fr}
+
+  .ftree-outer{padding:0 0 16px}
+}
+.mem-detail-card{
+  border-left:1px solid var(--border);
+  padding:20px 0 20px 20px;
+  transition:border-color .3s;
+}
+.mem-detail-card:hover{border-left-color:var(--gold)}
+.mem-detail-title{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:1.05rem;color:var(--light);margin-bottom:4px;
+}
+.mem-detail-author{
+  font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--gold);opacity:.6;margin-bottom:10px;
+}
+.mem-detail-text{font-size:.84rem;line-height:1.75;color:var(--text)}
+.mem-quotes{
+  margin-top:56px;padding-top:40px;
+  border-top:1px solid var(--border);
+  display:flex;flex-direction:column;gap:28px;align-items:center;
+  text-align:center;
+}
+.mem-quote-item{max-width:520px}
+.mem-quote-text{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:1.35rem;font-weight:300;color:var(--light);
+  line-height:1.6;margin-bottom:10px;
+}
+.mem-quote-attr{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-brand">Страница памяти</span>
+  <ul class="nav-links">
+    <li><a href="#timeline">Хроника</a></li>
+    <li><a href="#bio">Биография</a></li>
+    <li><a href="#gallery">Фото</a></li>
+    <li><a href="#tree">Древо</a></li>
+    <li><a href="#tributes">Слова</a></li>
+    <li><a href="#candle">Свеча</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:16px">
+    <div class="nav-dots" id="navDots">
+      <div class="nav-dot active" data-sec="0"></div>
+      <div class="nav-dot" data-sec="1"></div>
+      <div class="nav-dot" data-sec="2"></div>
+      <div class="nav-dot" data-sec="3"></div>
+      <div class="nav-dot" data-sec="4"></div>
+      <div class="nav-dot" data-sec="5"></div>
+    </div>
+    <button class="theme-toggle" id="themeToggle" title="Светлая / тёмная тема">
+      <span class="theme-toggle-icon" id="themeIcon">☾</span>
+      <div class="theme-toggle-track"><div class="theme-toggle-thumb"></div></div>
+      <span class="theme-toggle-icon" id="themeIconSun">☀︎</span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero" id="sec0">
+  <canvas id="starCanvas"></canvas>
+  <div class="hero-vignette"></div>
+  <div class="hero-content">
+    <div class="hero-label">Страница памяти</div>
+    <h1 class="hero-name" id="heroName"><span class="cursor" id="cur"></span></h1>
+    <div class="hero-divider"></div>
+    <div class="hero-dates">19.01.1925 - 03.05.1985</div>
+    <p class="hero-epitaph">«Сила была в доброте и правде»</p>
+  </div>
+  <div class="hero-scroll">
+    <span>прокрутите</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</div>
+
+<!-- TIMELINE -->
+<section class="section alt" id="timeline">
+  <div class="container">
+    <div class="sec-head fade-up">
+      <div class="sec-eyebrow">01</div>
+      <h2 class="sec-title">Хроника жизни</h2>
+    </div>
+    <div class="tl-wrap" id="tlWrap">
+      <div class="tl-line"></div>
+      <div class="tl-progress" id="tlProgress"></div>
+
+      <div class="tl-item fade-up">
+        <div class="tl-text-block">
+          <div class="tl-year">1925</div>
+          <div class="tl-title">Рождение</div>
+          <div class="tl-body">Родилась 19 января. Дочь Ивана Никифоровича и Просковьи Ивановны Кучеренко.</div>
+        </div>
+        <div class="tl-spacer"><div class="tl-dot"></div></div>
+        <div class="tl-empty"></div>
+      </div>
+
+      <div class="tl-item fade-up stagger-1">
+        <div class="tl-empty"></div>
+        <div class="tl-spacer"><div class="tl-dot"></div></div>
+        <div class="tl-text-block">
+          <div class="tl-year">1942</div>
+          <div class="tl-title">Равенсбрюк</div>
+          <div class="tl-body">Угнана в концентрационный лагерь. Ночью добывала еду для больной подруги. Вместе бежали, скрывались у немки в погребе - до освобождения поляками.</div>
+        </div>
+      </div>
+
+      <div class="tl-item fade-up stagger-2">
+        <div class="tl-text-block">
+          <div class="tl-year">1945</div>
+          <div class="tl-title">Возвращение</div>
+          <div class="tl-body">Вернулась в Ростов-на-Дону. Окончила медицинское училище на акушерку.</div>
+        </div>
+        <div class="tl-spacer"><div class="tl-dot"></div></div>
+        <div class="tl-empty"></div>
+      </div>
+
+      <div class="tl-item fade-up stagger-3">
+        <div class="tl-empty"></div>
+        <div class="tl-spacer"><div class="tl-dot"></div></div>
+        <div class="tl-text-block">
+          <div class="tl-year">1950е</div>
+          <div class="tl-title">Семья и работа</div>
+          <div class="tl-body">Гинеколог в ЦГБ. Родились дочери - Наталья и в 60-е еще Ирина. Каждое лето - море: Абхазия, Крым. Традиция без исключений.</div>
+        </div>
+      </div>
+
+      <div class="tl-item fade-up stagger-4">
+        <div class="tl-text-block">
+          <div class="tl-year">1968</div>
+          <div class="tl-title">Новый дом</div>
+          <div class="tl-body">Семья построила собственный дом. По праздникам вся улица собиралась во дворе - пироги, вишнёвый кисель, соседи.</div>
+        </div>
+        <div class="tl-spacer"><div class="tl-dot"></div></div>
+        <div class="tl-empty"></div>
+      </div>
+
+      <div class="tl-item fade-up stagger-5">
+        <div class="tl-empty"></div>
+        <div class="tl-spacer"><div class="tl-dot"></div></div>
+        <div class="tl-text-block">
+          <div class="tl-year">1985</div>
+          <div class="tl-title">Уход</div>
+          <div class="tl-body">Ушла из жизни 3 мая. Успела увидеть внучек - Оксану и Марину, которую ласково называла Марьяной.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BIO -->
+<section class="section" id="bio">
+  <div class="container">
+    <div class="sec-head fade-up">
+      <div class="sec-eyebrow">02</div>
+      <h2 class="sec-title">О человеке</h2>
+    </div>
+    <div class="bio-grid">
+      <div class="bio-photo-wrap fade-up">
+        <div class="bio-photo-frame">
+          <img src="photos/Иван_Прасковья_Владимир_И_Валентина_Кучеренко_1952.jpg" alt="Семья Кучеренко, 1952" onerror="this.src='https://placehold.co/600x800/161410/c9a055?text=Фото'"/>
+          <div class="bio-photo-caption">Семья Кучеренко, 1952</div>
+        </div>
+        <div class="bio-facts">
+          <div class="bio-fact">
+            <span class="bio-fact-label">Место жизни</span>
+            <span class="bio-fact-value">Ростов-на-Дону</span>
+          </div>
+          <div class="bio-fact">
+            <span class="bio-fact-label">Профессия</span>
+            <span class="bio-fact-value">Акушерка, гинеколог ЦГБ</span>
+          </div>
+          <div class="bio-fact">
+            <span class="bio-fact-label">Супруг</span>
+            <span class="bio-fact-value">Левкин Федор Афанасьевич<br/><span style="color:var(--muted);font-size:.78rem">1920 - 1974</span></span>
+          </div>
+          <div class="bio-fact">
+            <span class="bio-fact-label">Дети</span>
+            <span class="bio-fact-value">Владимир, Наталья, Ирина</span>
+          </div>
+          <div class="bio-fact">
+            <span class="bio-fact-label">Внуки</span>
+            <span class="bio-fact-value">Оксана, Марина, Ольга, Валентина</span>
+          </div>
+        </div>
+      </div>
+      <div class="bio-text fade-up stagger-2">
+        <p><span class="bio-drop">В</span>алентина Ивановна Левкина родилась 19 января 1925 года. Её жизнь пришлась на одно из самых тяжёлых времён XX века, когда судьба человека зависела не только от его характера и воли, но и от войны, голода, страха, насилия и чужих решений. На её долю выпало многое - и то, что ломает, и то, через что приходится проходить, чтобы потом заново собирать свою жизнь почти с нуля.</p>
+
+        <div class="bio-chapter"><span class="bio-chapter-label">Война</span></div>
+
+        <p>Самым страшным и самым определяющим испытанием в её судьбе стал концлагерь Равенсбрюк. В годы войны Валентина Ивановна оказалась его узницей. Для семьи эта часть её жизни осталась не просто как исторический факт, а как живая, тяжёлая память, которую невозможно вычеркнуть. По воспоминаниям близких, даже в лагере она не потеряла в себе человеческое. По ночам пробиралась к мусорным жбанам, собирала огрызки и картофельные шкурки и приносила их своей больной подруге Симе, чтобы та не умерла от голода. В этой истории особенно сильно чувствуется, какой она была - не только жертвой страшного времени, но и человеком, который даже в нечеловеческих условиях оставался способным спасать другого.</p>
+
+        <p>Позже Валентина Ивановна бежала из лагеря вместе с Симой. После побега их укрыла немка, спрятав у себя в погребе, где они какое-то время скрывались. Потом, после освобождения поляками, им удалось выбраться и приехать в Ростов-на-Дону. В семье помнили и то, что после возвращения Валентина Ивановна и Сима жили рядом. История Равенсбрюка, побега и спасения Симы сохранилась в памяти близких как один из главных узлов всей её жизни. Это был не просто эпизод прошлого, а та часть судьбы, через которую потом по-другому читается всё остальное - её характер, её жёсткость, её сила и её способность жить дальше.</p>
+
+        <div class="bio-chapter"><span class="bio-chapter-label">После войны</span></div>
+
+        <p>После войны Валентина Ивановна не замкнулась в пережитом и не растворилась в своей боли. Она продолжила строить жизнь. Училась в медучилище на акушерку. В семье запомнился даже один бытовой, человеческий эпизод из этого времени: на экзамене её спросили, сколько зубов у новорождённого, и она ответила неправильно, из-за чего получила незачёт. Эта маленькая деталь звучит почти неожиданно рядом с лагерем и войной, но именно в таких деталях и чувствуется живая судьба - не памятник, а человек, который после страшного прошлого снова учился, работал, ошибался и продолжал идти вперёд.</p>
+
+        <p>По воспоминаниям семьи, Валентина Ивановна работала в медицине, в том числе в ЦГБ, а также трудилась в ресторане посудницей. О её трудовой жизни напоминает и сохранившаяся в семье памятная статуэтка с надписью: «Вале в день рождения от участка цеха 16, 1964 год». Эта вещь осталась не просто как предмет, а как живое материальное свидетельство её времени, её круга людей и той жизни, которую она вела после войны.</p>
+
+        <p>Её судьба не была гладкой и удобной для красивого пересказа. В ней были и тяжёлые, спорные, непростые страницы. Валентина Ивановна сидела в тюрьме за сделанный на дому аборт, а затем была освобождена по амнистии, так как у неё были несовершеннолетние дети. Это тоже часть её биографии - не приглаженной, не выдуманной, а настоящей. В её жизни было не только выживание, но и тяжёлый выбор, и суровая реальность времени, в котором многое решалось не по учебнику и не по морализаторским схемам, а по обстоятельствам.</p>
+
+        <div class="bio-chapter"><span class="bio-chapter-label">Семья</span></div>
+
+        <p>Важной частью её жизни стала семья. Мужем Валентины Ивановны был Левкин Фёдор Афанасьевич. У неё было трое детей - Владимир Николаевич Кучеренко, Наталья Фёдоровна Зинченко и Ирина Фёдоровна Левкина. Фамилия Кучеренко была материнской и досталась старшему сыну Владимиру. Главным смыслом её жизни, по воспоминаниям родных, были дети, дом и семья. В этом доме было всё настоящее - работа, строгость, забота, конфликты, примирения, привычки, праздники и характер. Позже она дожила и до внуков. Дедушка своих внучек уже не увидел, а Валентина Ивановна успела застать Марину и Оксану. Марину она ласково называла Марьяной и, как вспоминали в семье, покупала ей дорогие вещи. По словам близких, внуков она любила особенно нежно.</p>
+
+        <p>По воспоминаниям дочерей, Валентина Ивановна была женщиной очень живой, сильной и работящей. Она любила красиво одеваться, ходила к модистке, шила платья из креп-жоржета и панбархата, носила украшения - перстни, цепочки, серьги. Пользовалась духами «Каменный цветок». После лагеря долго курила Беломорканал, а позже, когда здоровье стало хуже, перешла на более слабые сигареты. Любила вино. В семье вспоминали и то, что ей нравились цыганские песни. В ней сочетались и тепло, и строгость, и забота, и жёсткость, и вкус к жизни, и внутренняя выносливость. Она не была человеком бесцветным или тихим - наоборот, в ней было много энергии, характера и настоящей силы.</p>
+
+        <div class="bio-chapter"><span class="bio-chapter-label">Конец и память</span></div>
+
+        <p>Последние годы её жизни были связаны с тяжёлой болезнью. У Валентины Ивановны обнаружили онкологию желудка. Планировалась операция стоимостью 1000 рублей, но врач сказал, что помочь уже ничем не может - было слишком поздно. Она умерла дома 3 мая 1985 года.</p>
+
+        <p>После себя Валентина Ивановна оставила не только фотографии, документы и семейные вещи. Она оставила детей, внуков, дом и память о женщине, которая прошла через концлагерь, побег, тяжёлую работу, тюрьму, болезнь и суровые обстоятельства жизни и всё равно осталась в памяти близких <em>живой, сильной и настоящей.</em></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="section alt" id="gallery">
+  <div class="container">
+    <div class="sec-head fade-up">
+      <div class="sec-eyebrow">03</div>
+      <h2 class="sec-title">Фотографии</h2>
+    </div>
+    <div class="gal-grid">
+      <div class="gal-item fade-up stagger-1" onclick="openLb(this)">
+        <img src="photos/Иван_Прасковья_Владимир_И_Валентина_Кучеренко_1952.jpg" alt="1952 - Семья Кучеренко"/>
+        <div class="gal-overlay"><span>1952 - Семья Кучеренко</span></div>
+      </div>
+      <div class="gal-item fade-up stagger-2" onclick="openLb(this)">
+        <img src="photos/1957.jpg" alt="1957 год"/>
+        <div class="gal-overlay"><span>1957 год</span></div>
+      </div>
+      <div class="gal-item fade-up stagger-3" onclick="openLb(this)">
+        <img src="photos/59_Левкина_Валентина_И_Кучеренко_Владимир_И_Левкина_Наталья_page-0001.jpg" alt="~1959 - Семья"/>
+        <div class="gal-overlay"><span>~1959 - Валентина, Владимир, Наталья</span></div>
+      </div>
+      <div class="gal-item fade-up stagger-4" onclick="openLb(this)">
+        <img src="photos/Валя И Сима 1960 (подруги)_page-0001.jpg" alt="1960 - Валя и Сима"/>
+        <div class="gal-overlay"><span>1960 - Валя и Сима</span></div>
+      </div>
+      <div class="gal-item fade-up stagger-5" onclick="openLb(this)">
+        <img src="photos/61_Жарикова_Ганна_Куч_Ваня_И_Паня_Левкин_Владимир_И_Наталья_page-0001.jpg" alt="1961 - Групповое фото"/>
+        <div class="gal-overlay"><span>1961 - Семья и близкие</span></div>
+      </div>
+      <div class="gal-item fade-up stagger-6" onclick="openLb(this)">
+        <img src="photos/1963_Федор_И_Валентина_Левкина_И_Дочь_Наталья_page-0001.jpg" alt="1963 - Семья Левкиных"/>
+        <div class="gal-overlay"><span>1963 - Федор, Валентина и дочь Наталья</span></div>
+      </div>
+      <div class="gal-item fade-up stagger-6" onclick="openLb(this)">
+        <img src="photos/Валентина И Сын Владимир_page-0001.jpg" alt="Валентина и сын Владимир"/>
+        <div class="gal-overlay"><span>Валентина и сын Владимир</span></div>
+      </div>
+      <div class="gal-item fade-up stagger-6" onclick="openLb(this)">
+        <img src="photos/orenb_112.jpg" alt="Оренбургский 112"/>
+        <div class="gal-overlay"><span>Дом на Оренбургском, 112</span></div>
+      </div>
+      <div class="gal-item fade-up stagger-6" onclick="openLb(this)">
+        <img src="photos/статуэтка от коллектива.jpg" alt="Статуэтка от коллектива"/>
+        <div class="gal-overlay"><span>Статуэтка от коллектива</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="lightbox" id="lb" onclick="closeLb()">
+  <button class="lb-close" onclick="closeLb()">✕ закрыть</button>
+  <img id="lbImg"/>
+</div>
+
+<!-- TREE -->
+<section class="section tree-section" id="tree">
+  <div class="container">
+    <div class="sec-head fade-up">
+      <div class="sec-eyebrow">04</div>
+      <h2 class="sec-title">Семейное древо</h2>
+    </div>
+    <div class="ftree-outer fade-up">
+      <div class="ftree-container">
+
+        <!-- SVG connecting lines -->
+        <svg class="ftree-svg" viewBox="0 0 600 540" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="#c9a055" stroke-width="1" fill="none" opacity="0.38">
+            <!-- Left generation timeline -->
+            <line x1="18" y1="36" x2="18" y2="462" stroke-dasharray="3 7" opacity="0.18"/>
+
+            <!-- Gen I couple connector (Иван + Прасковья) -->
+            <line x1="160" y1="36" x2="260" y2="36"/>
+
+            <!-- Gen I parents -> Валентина (bezier curve) -->
+            <path d="M 210 66 C 210 116, 165 116, 165 162"/>
+
+            <!-- Gen II couple connector (Валентина + Федор) -->
+            <line x1="201" y1="196" x2="359" y2="196"/>
+
+            <!-- Gen II couple midpoint -> down + horizontal bar + stubs to children -->
+            <line x1="280" y1="196" x2="280" y2="320"/>
+            <line x1="80" y1="278" x2="480" y2="278"/>
+            <line x1="80" y1="278" x2="80" y2="320"/>
+            <line x1="480" y1="278" x2="480" y2="320"/>
+
+            <!-- Gen III Наталья -> grandchildren -->
+            <line x1="280" y1="376" x2="280" y2="406"/>
+            <line x1="215" y1="406" x2="345" y2="406"/>
+            <line x1="215" y1="406" x2="215" y2="434"/>
+            <line x1="345" y1="406" x2="345" y2="434"/>
+
+            <!-- Gen III Ирина -> grandchildren -->
+            <line x1="480" y1="376" x2="480" y2="406"/>
+            <line x1="430" y1="406" x2="530" y2="406"/>
+            <line x1="430" y1="406" x2="430" y2="434"/>
+            <line x1="530" y1="406" x2="530" y2="434"/>
+          </g>
+
+          <!-- Generation roman numerals -->
+          <text x="18" y="39" fill="#5a5448" font-size="7" font-family="Georgia,serif" text-anchor="middle" opacity="0.45">I</text>
+          <text x="18" y="199" fill="#5a5448" font-size="7" font-family="Georgia,serif" text-anchor="middle" opacity="0.45">II</text>
+          <text x="18" y="351" fill="#5a5448" font-size="7" font-family="Georgia,serif" text-anchor="middle" opacity="0.45">III</text>
+          <text x="18" y="465" fill="#5a5448" font-size="7" font-family="Georgia,serif" text-anchor="middle" opacity="0.45">IV</text>
+        </svg>
+
+        <!-- Gen I: Grandparents -->
+        <div class="fnode dim" style="left:90px;top:8px">
+          <img class="fnode-img" src="" onerror="this.src='https://placehold.co/56x56/161410/272318?text='" alt="Иван Кучеренко"/>
+          <div class="fnode-name">Иван Никифорович<br>Кучеренко</div>
+          <div class="fnode-dates">р. 1897</div>
+        </div>
+        <div class="fnode dim" style="left:250px;top:8px">
+          <img class="fnode-img" src="" onerror="this.src='https://placehold.co/56x56/161410/272318?text='" alt="Прасковья Кучеренко"/>
+          <div class="fnode-name">Прасковья Ивановна<br>Кучеренко</div>
+          <div class="fnode-dates">домохозяйка</div>
+        </div>
+
+        <!-- Gen II: Subject (main) + Husband -->
+        <div class="fnode main" style="left:125px;top:162px">
+          <img class="fnode-img" src="photos/Screenshot_26.png" style="object-position:50% 20%" onerror="this.src='https://placehold.co/68x68/2a2210/c9a055?text='" alt="Валентина Левкина"/>
+          <div class="fnode-name">Валентина Ивановна<br>Левкина</div>
+          <div class="fnode-dates">1925 - 1985</div>
+        </div>
+        <div class="fnode dim" style="left:355px;top:168px">
+          <img class="fnode-img" src="" onerror="this.src='https://placehold.co/56x56/161410/272318?text='" alt="Федор Левкин"/>
+          <div class="fnode-name">Федор Афанасьевич<br>Левкин</div>
+          <div class="fnode-dates">1920 - 1974</div>
+        </div>
+
+        <!-- Gen III: Children -->
+        <div class="fnode dim" style="left:40px;top:320px">
+          <img class="fnode-img" src="" onerror="this.src='https://placehold.co/56x56/161410/272318?text='" alt="Владимир"/>
+          <div class="fnode-name">Владимир<br>Николаевич</div>
+          <div class="fnode-dates">сын</div>
+        </div>
+        <div class="fnode dim" style="left:240px;top:320px">
+          <img class="fnode-img" src="" onerror="this.src='https://placehold.co/56x56/161410/272318?text='" alt="Наталья"/>
+          <div class="fnode-name">Наталья<br>Федоровна</div>
+          <div class="fnode-dates">дочь</div>
+        </div>
+        <div class="fnode dim" style="left:440px;top:320px">
+          <img class="fnode-img" src="" onerror="this.src='https://placehold.co/56x56/161410/272318?text='" alt="Ирина"/>
+          <div class="fnode-name">Ирина<br>Федоровна</div>
+          <div class="fnode-dates">дочь</div>
+        </div>
+
+        <!-- Gen IV: Grandchildren (from Наталья) -->
+        <div class="fnode dim" style="left:175px;top:434px">
+          <img class="fnode-img" src="" onerror="this.src='https://placehold.co/56x56/161410/272318?text='" alt="Оксана"/>
+          <div class="fnode-name">Оксана</div>
+          <div class="fnode-dates">внучка</div>
+        </div>
+        <div class="fnode dim" style="left:305px;top:434px">
+          <img class="fnode-img" src="" onerror="this.src='https://placehold.co/56x56/161410/272318?text='" alt="Марина"/>
+          <div class="fnode-name">Марина</div>
+          <div class="fnode-dates">внучка</div>
+        </div>
+
+        <!-- Gen IV: Grandchildren (from Ирина) -->
+        <div class="fnode dim" style="left:390px;top:434px">
+          <img class="fnode-img" src="" onerror="this.src='https://placehold.co/56x56/161410/272318?text='" alt="Ольга"/>
+          <div class="fnode-name">Ольга</div>
+          <div class="fnode-dates">внучка</div>
+        </div>
+        <div class="fnode dim" style="left:490px;top:434px">
+          <img class="fnode-img" src="" onerror="this.src='https://placehold.co/56x56/161410/272318?text='" alt="Валентина"/>
+          <div class="fnode-name">Валентина</div>
+          <div class="fnode-dates">внучка</div>
+        </div>
+
+      </div><!-- /ftree-container -->
+    </div><!-- /ftree-outer -->
+  </div>
+</section>
+
+<!-- MAP -->
+<section class="section alt" id="map">
+  <div class="container">
+    <div class="sec-head fade-up">
+      <div class="sec-eyebrow">05</div>
+      <h2 class="sec-title">Место захоронения</h2>
+    </div>
+    <p class="map-label fade-up">Ростов-на-Дону - кладбище уточняется</p>
+    <div class="map-wrap fade-up">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2245.0!2d39.72!3d47.22!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z!5e0!3m2!1sru!2sru!4v1" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- TRIBUTES -->
+<section class="section alt" id="tributes">
+  <div class="container">
+    <div class="sec-head fade-up">
+      <div class="sec-eyebrow">06</div>
+      <h2 class="sec-title">Слова близких</h2>
+    </div>
+
+    <div class="mem-subsection fade-up">
+      <div class="mem-subsection-line"></div>
+      <span class="mem-subsection-label">Главные воспоминания</span>
+      <div class="mem-subsection-line"></div>
+    </div>
+    <div class="mem-main-grid">
+      <div class="mem-card fade-up stagger-1">
+        <div class="mem-card-title">«Я их растила»</div>
+        <div class="mem-card-author">Вспоминает дочь Наталья</div>
+        <div class="mem-card-text">Однажды мама уехала отдыхать в дом отдыха, а я попросила папу подстричь мне волосы. Он взял и отрезал. Когда мама вернулась, как начала на него кричать: «Зачем ты отрезал? Я их растила!» А я тогда про себя подумала: «Чего это она их растила, если это мои волосы?» До сих пор эту историю помню и смеюсь.</div>
+      </div>
+      <div class="mem-card fade-up stagger-2">
+        <div class="mem-card-title">«Шифоньер»</div>
+        <div class="mem-card-author">Вспоминает дочь Ирина</div>
+        <div class="mem-card-text">Однажды мама ушла на работу, а я спряталась в шкаф. Наталья перепугалась и поехала на завод на Нариманова, где мама работала мастером в цехе №16, чтобы сказать ей, что меня нигде нет. Они уже вместе поехали домой, добирались двумя транспортами, всю дорогу были в тревоге. Дома кричали, звали, искали меня, не знали уже что думать. А потом каким-то чудом открыли шифоньер - и оказалось, что я там просто сплю. Потом это в семье ещё долго вспоминали.</div>
+      </div>
+      <div class="mem-card fade-up stagger-3">
+        <div class="mem-card-title">«Сначала сшей - потом гуляй»</div>
+        <div class="mem-card-author">Вспоминает дочь Наталья</div>
+        <div class="mem-card-text">Мама просто так гулять не отпускала. Хочешь на танцы или куда-то идти - сначала что-то сделай. Могла сказать: сошьёшь наволочку или пододеяльник - тогда пойдёшь. И гулять можно было в основном по субботам и воскресеньям. Каждый день шататься было не принято.</div>
+      </div>
+      <div class="mem-card fade-up stagger-4">
+        <div class="mem-card-title">«Когда тебе будет 56»</div>
+        <div class="mem-card-author">Вспоминает дочь Ирина</div>
+        <div class="mem-card-text">Однажды мы поехали на рынок, и мама купила себе синее пальто, сапоги и чёрную шапку. Я тогда удивилась, зачем ей всё это. А она мне сказала: «Вот когда тебе будет 56, купишь себе галоши и будешь в них ходить.» Вот такая она была - с характером и с ответом.</div>
+      </div>
+      <div class="mem-card fade-up stagger-5">
+        <div class="mem-card-title">«Мороженое и море»</div>
+        <div class="mem-card-author">Вспоминает дочь Ирина</div>
+        <div class="mem-card-text">Мама всегда могла дать денег на мороженое. Казалось бы, мелочь, а я это запомнила на всю жизнь. И ещё мама каждый год возила нас на море - в Абхазию, в Крым, в разные места. Для нас это была настоящая традиция и настоящее счастье. Из таких вещей и складывается память о человеке.</div>
+      </div>
+      <div class="mem-card fade-up stagger-6">
+        <div class="mem-card-title">«Мутоновая шуба»</div>
+        <div class="mem-card-author">Вспоминает дочь Ирина</div>
+        <div class="mem-card-text">Однажды мы пришли из детского сада, мне было года три или четыре. На мне была мутоновая шуба. Я снимала её и бросала на пол, а мама просила поднять. Я упрямилась и не поднимала. Тогда она меня отлупила авоськой, закрыла внизу, а сама ушла наверх, на второй этаж. А я потом выбила окно и всё равно пошла к ним наверх. Сейчас это вспоминается как история, в которой характер был у обеих - и у мамы, и у меня.</div>
+      </div>
+      <div class="mem-card fade-up stagger-6">
+        <div class="mem-card-title">«Праздники, лото и телевизор»</div>
+        <div class="mem-card-author">Вспоминает дочь Наталья</div>
+        <div class="mem-card-text">На праздники у нас возле дома собирались соседи. Выносили пироги, судочки с густым вишнёвым киселём. Было шумно, вкусно и по-настоящему по-семейному. А по вечерам дома играли в лото и смотрели телевизор. Тогда телевизор сам по себе был событием. Для меня это и есть память о доме - вечер, семья рядом, соседи рядом, и жизнь вокруг.</div>
+      </div>
+      <div class="mem-card fade-up stagger-6">
+        <div class="mem-card-title">«Я бы попросила прощения»</div>
+        <div class="mem-card-author">Вспоминает дочь Ирина</div>
+        <div class="mem-card-text">Сейчас я бы у мамы попросила прощения много раз. Я была не подарок, попила с неё крови. Помню, как однажды пришла с гулянки, мы поругались, и я ей сказала: «Гавкаешь как собака.» Она переспросила, а я повторила. С возрастом на такие вещи смотришь совсем по-другому. Тогда не понимала, а потом понимаешь, сколько в человеке было терпения, сколько любви и сколько он вынес.</div>
+      </div>
+    </div>
+
+    <div class="mem-subsection fade-up">
+      <div class="mem-subsection-line"></div>
+      <span class="mem-subsection-label">Домашние детали</span>
+      <div class="mem-subsection-line"></div>
+    </div>
+    <div class="tributes-grid">
+      <div class="tribute-card fade-up stagger-1">
+        <div class="tribute-quote">❝</div>
+        <div class="tribute-meta"><span class="tribute-name">«Забота по-домашнему»</span><span class="tribute-rel">дочь Наталья</span></div>
+        <p class="tribute-text">О нас заботились по-простому, по-домашнему. Мыли нам голову в корытах, мазали пятки козьим жиром, чтобы не простужались, обували, одевали, отправляли в пионерлагеря. Это всё было без лишних слов, просто потому что нас любили.</p>
+      </div>
+      <div class="tribute-card fade-up stagger-2">
+        <div class="tribute-quote">❝</div>
+        <div class="tribute-meta"><span class="tribute-name">«Любила красиво одеваться»</span><span class="tribute-rel">дочь Ирина</span></div>
+        <p class="tribute-text">Мама любила хорошо одеваться. Ходила к модистке, шила платья, носила украшения. Она не хотела выглядеть как попало. В ней всегда было чувство к красоте и к себе.</p>
+      </div>
+      <div class="tribute-card fade-up stagger-3">
+        <div class="tribute-quote">❝</div>
+        <div class="tribute-meta"><span class="tribute-name">«Мелкими шагами»</span><span class="tribute-rel">дочь Ирина</span></div>
+        <p class="tribute-text">Мама ходила мелкими шагами и всегда возмущалась на тех, кто широко шагает. Это такая мелочь, но именно такие вещи запоминаются сильнее всего - походка, интонация, привычки.</p>
+      </div>
+      <div class="tribute-card fade-up stagger-4">
+        <div class="tribute-quote">❝</div>
+        <div class="tribute-meta"><span class="tribute-name">«Любила внуков»</span><span class="tribute-rel">дочь Ирина</span></div>
+        <p class="tribute-text">Мама очень любила внуков. Даже говорила, что внуков любишь по-особенному. Я тогда не понимала, а она мне отвечала: «Вот будут у тебя внуки - тогда поймёшь.»</p>
+      </div>
+      <div class="tribute-card fade-up stagger-5">
+        <div class="tribute-quote">❝</div>
+        <div class="tribute-meta"><span class="tribute-name">«Мамины слова»</span><span class="tribute-rel">дочь Ирина</span></div>
+        <p class="tribute-text">У мамы был характер, и сказать она могла жёстко. «Не нравится выть, как моя стая воет, - вон со двора.» А мне самой говорила: «Придёт время - локти кусать будешь.» С возрастом понимаешь - она многое видела наперёд.</p>
+      </div>
+      <div class="tribute-card fade-up stagger-6">
+        <div class="tribute-quote">❝</div>
+        <div class="tribute-meta"><span class="tribute-name">«Телевизор на пол-улицы»</span><span class="tribute-rel">дочь Ирина</span></div>
+        <p class="tribute-text">Телевизор тогда был такой, что пол-улицы приходило смотреть. Для нас это было целое событие. Дом жил не только своей семьёй - вокруг всегда были люди, соседи, шум, движение.</p>
+      </div>
+      <div class="tribute-card fade-up stagger-6">
+        <div class="tribute-quote">❝</div>
+        <div class="tribute-meta"><span class="tribute-name">«Кукольная коляска»</span><span class="tribute-rel">Оксана, внучка</span></div>
+        <p class="tribute-text">Я совсем маленькая была, не помню её почти. Один момент всплывает: на каменке в зале она мне подарила кукольную коляску - пластмассовую, бело-голубую, для маленького пупсика. Это всё, что осталось в памяти. Но это осталось.</p>
+      </div>
+      <div class="tribute-card fade-up stagger-6">
+        <div class="tribute-quote">❝</div>
+        <div class="tribute-meta"><span class="tribute-name">«Марьяна»</span><span class="tribute-rel">Марина, внучка</span></div>
+        <p class="tribute-text">Дедушка своих внучек уже не видел, а бабушка видела меня и Оксану. Меня она ласково называла Марьяной. В семье вспоминали, что мне она покупала дорогие вещи. Для меня это осталось как память о её тепле и о том, что она успела побыть рядом с нами.</p>
+      </div>
+    </div>
+
+    <div class="mem-quotes fade-up">
+      <div class="mem-quote-item">
+        <div class="mem-quote-text">«Если одним словом, они были очаровашки»</div>
+        <div class="mem-quote-attr">дочь Наталья о родителях</div>
+      </div>
+      <div class="mem-quote-item">
+        <div class="mem-quote-text">«Для меня они - любимые»</div>
+        <div class="mem-quote-attr">дочь Ирина о родителях</div>
+      </div>
+    </div>
+
+    <div class="tribute-form-wrap fade-up" style="margin-top:56px">
+      <div class="form-title">Добавить воспоминание</div>
+      <div class="t-row">
+        <input id="tribute-name" type="text" placeholder="Ваше имя"/>
+        <input id="tribute-relation" type="text" placeholder="Кем приходитесь"/>
+      </div>
+      <textarea id="tribute-message" placeholder="Напишите воспоминание..."></textarea>
+      <button class="t-btn" onclick="submitTribute(this)">Отправить</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- CANDLE -->
+<section class="candle-section" id="candle">
+  <div class="candle-bg"></div>
+  <canvas id="sparksCanvas"></canvas>
+  <div class="candle-inner fade-up">
+    <h2 class="candle-heading">Зажгите свечу</h2>
+    <p class="candle-sub">в знак памяти и уважения</p>
+    <div class="candle-el" id="candleEl">
+      <div class="flame-wrap">
+        <div class="flame-outer"></div>
+        <div class="flame-inner"></div>
+      </div>
+      <div class="wick"></div>
+      <div class="wax-body"></div>
+      <div class="wax-base"></div>
+    </div>
+    <div class="glow-ring" id="glowRing"></div>
+    <button class="c-btn" id="cBtn" onclick="toggleCandle()">Зажечь свечу</button>
+    <div class="c-count">Всего зажжено свечей: <span class="c-count-num" id="cCount">0</span></div>
+  </div>
+</section>
+
+<!-- QR -->
+<section class="qr-section" id="qr">
+  <div class="container">
+    <div class="qr-inner fade-up">
+      <div class="qr-canvas" id="qrCode"></div>
+      <div class="qr-btns">
+        <button class="qr-btn" onclick="dlQR()">Скачать QR-код</button>
+        <button class="qr-btn" onclick="cpLink(this)">Скопировать ссылку</button>
+      </div>
+      <p class="qr-url" id="qrUrl"></p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p class="footer-love">Страница памяти создана с любовью</p>
+  <a href="#sec0">Наверх ↑</a>
+</footer>
+
+<script>
+/* ── CANVAS BACKGROUND (звёзды / лепестки) ── */
+const heroBG = (function(){
+  const c   = document.getElementById('starCanvas');
+  const ctx = c.getContext('2d');
+  let stars  = [];
+  let petals = [];
+  let mode   = 'stars'; // 'stars' | 'petals'
+  let raf;
+
+  function resize(){
+    c.width  = c.offsetWidth;
+    c.height = c.offsetHeight;
+    initStars();
+    initPetals();
+  }
+
+  function initStars(){
+    stars = Array.from({length:160}, ()=>({
+      x: Math.random()*c.width,
+      y: Math.random()*c.height,
+      r: Math.random()*1.2+.2,
+      speed: Math.random()*.0004+.0001,
+      phase: Math.random()*Math.PI*2,
+    }));
+  }
+
+  function initPetals(){
+    const count = Math.floor((c.width * c.height) / 11000);
+    petals = Array.from({length: count}, ()=>({
+      x: Math.random()*c.width,
+      y: Math.random()*c.height,
+      r: 2 + Math.random()*4,
+      speedX: (Math.random()-.5)*.4,
+      speedY: .3 + Math.random()*.6,
+      opacity: .07 + Math.random()*.18,
+      rot: Math.random()*Math.PI*2,
+      rotSpeed: (Math.random()-.5)*.02,
+      wobble: Math.random()*Math.PI*2,
+      wobbleSpeed: .008 + Math.random()*.012,
+      hue: 320 + Math.random()*40,
+    }));
+  }
+
+  function drawStars(t){
+    ctx.clearRect(0,0,c.width,c.height);
+    stars.forEach(s=>{
+      const alpha = .15 + .6*(Math.sin(s.phase + t*s.speed*1000)*.5+.5);
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(201,160,85,${alpha})`;
+      ctx.fill();
+    });
+  }
+
+  function drawPetals(){
+    ctx.clearRect(0,0,c.width,c.height);
+    petals.forEach(p=>{
+      p.wobble  += p.wobbleSpeed;
+      p.x       += p.speedX + Math.sin(p.wobble)*.3;
+      p.y       += p.speedY;
+      p.rot     += p.rotSpeed;
+      if(p.y > c.height+20){ p.y=-20; p.x=Math.random()*c.width; }
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      ctx.globalAlpha = p.opacity;
+      ctx.beginPath();
+      ctx.ellipse(0, 0, p.r, p.r*1.6, 0, 0, Math.PI*2);
+      ctx.fillStyle = `hsl(${p.hue},38%,68%)`;
+      ctx.fill();
+      ctx.restore();
+    });
+  }
+
+  function loop(t){
+    if(mode==='stars') drawStars(t);
+    else               drawPetals();
+    raf = requestAnimationFrame(loop);
+  }
+
+  window.addEventListener('resize', resize, {passive:true});
+  resize();
+  raf = requestAnimationFrame(loop);
+
+  return {
+    setMode(m){ mode = m; }
+  };
+})();
+
+/* ── TYPEWRITER ── */
+(function(){
+  const el=document.getElementById('heroName');
+  const cur=document.getElementById('cur');
+  const text='Левкина\nВалентина\nИвановна';
+  let i=0;
+  function type(){
+    if(i<=text.length){
+      const chunk=text.slice(0,i).replace('\n','<br/>');
+      el.innerHTML=chunk+'<span class="cursor" id="cur"></span>';
+      i++;
+      setTimeout(type,i<10?80:i===1?400:55);
+    } else {
+      setTimeout(()=>{
+        const c=document.getElementById('cur');
+        if(c)c.style.display='none';
+      },2000);
+    }
+  }
+  setTimeout(type,800);
+})();
+
+/* ── SCROLL REVEAL ── */
+const revealEls=document.querySelectorAll('.fade-up,.sec-title');
+const revObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('on','revealed');
+      // timeline dot
+      const item=e.target.closest('.tl-item');
+      if(item)item.classList.add('on');
+    }
+  });
+},{threshold:.12});
+revealEls.forEach(el=>revObs.observe(el));
+
+/* ── TIMELINE LINE PROGRESS ── */
+(function(){
+  const wrap=document.getElementById('tlWrap');
+  const prog=document.getElementById('tlProgress');
+  if(!wrap||!prog)return;
+  function update(){
+    const r=wrap.getBoundingClientRect();
+    const vh=window.innerHeight;
+    const visible=Math.min(vh,r.bottom)-Math.max(0,r.top);
+    const pct=Math.max(0,Math.min(1,(vh-r.top)/(r.height+vh)));
+    prog.style.height=(pct*100)+'%';
+  }
+  window.addEventListener('scroll',update,{passive:true});
+  update();
+})();
+
+/* ── NAV DOTS активный раздел ── */
+(function(){
+  const secs=['sec0','timeline','bio','gallery','tree','candle'];
+  const dots=document.querySelectorAll('.nav-dot');
+  function update(){
+    let active=0;
+    secs.forEach((id,i)=>{
+      const el=document.getElementById(id);
+      if(!el)return;
+      if(el.getBoundingClientRect().top<=window.innerHeight/2)active=i;
+    });
+    dots.forEach((d,i)=>d.classList.toggle('active',i===active));
+  }
+  dots.forEach(d=>d.addEventListener('click',()=>{
+    const el=document.getElementById(secs[+d.dataset.sec]);
+    if(el)el.scrollIntoView({behavior:'smooth'});
+  }));
+  window.addEventListener('scroll',update,{passive:true});
+})();
+
+/* ── LIGHTBOX ── */
+function openLb(el){
+  document.getElementById('lbImg').src=el.querySelector('img').src;
+  document.getElementById('lb').classList.add('on');
+  document.body.style.overflow='hidden';
+}
+function closeLb(){
+  document.getElementById('lb').classList.remove('on');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>e.key==='Escape'&&closeLb());
+
+/* ── СВЕЧА + ИСКРЫ ── */
+let lit=false,count=+localStorage.getItem('cv6')||0;
+document.getElementById('cCount').textContent=count;
+
+const sc=document.getElementById('sparksCanvas');
+const sctx=sc.getContext('2d');
+let sparks=[];
+function resizeSC(){sc.width=sc.offsetWidth;sc.height=sc.offsetHeight}
+window.addEventListener('resize',resizeSC);resizeSC();
+
+function spawnSpark(){
+  const cx=sc.width/2,cy=sc.height/2+30;
+  sparks.push({
+    x:cx+(Math.random()-.5)*10,
+    y:cy,
+    vx:(Math.random()-.5)*1.5,
+    vy:-(Math.random()*2+1.5),
+    life:1,
+    size:Math.random()*2+1,
+  });
+}
+function animSparks(){
+  sctx.clearRect(0,0,sc.width,sc.height);
+  if(lit&&sparks.length<60&&Math.random()>.4)spawnSpark();
+  sparks=sparks.filter(s=>s.life>0);
+  sparks.forEach(s=>{
+    s.x+=s.vx;s.y+=s.vy;
+    s.vx+=(Math.random()-.5)*.15;
+    s.vy+=.04;
+    s.life-=.018;
+    sctx.beginPath();
+    sctx.arc(s.x,s.y,s.size*s.life,0,Math.PI*2);
+    const alpha=s.life*.9;
+    sctx.fillStyle=`rgba(255,${140+Math.floor(s.life*100)},30,${alpha})`;
+    sctx.fill();
+  });
+  requestAnimationFrame(animSparks);
+}
+animSparks();
+
+function toggleCandle(){
+  lit=!lit;
+  document.getElementById('candleEl').classList.toggle('lit',lit);
+  document.getElementById('glowRing').style.opacity=lit?'1':'0';
+  const btn=document.getElementById('cBtn');
+  btn.textContent=lit?'Свеча горит':'Зажечь свечу';
+  btn.classList.toggle('on',lit);
+  if(lit){
+    count++;
+    localStorage.setItem('cv6',count);
+    animateCount(count);
+  }
+}
+function animateCount(target){
+  const el=document.getElementById('cCount');
+  let n=+el.textContent;
+  const step=()=>{if(n<target){n++;el.textContent=n;requestAnimationFrame(step);}};
+  step();
+}
+
+/* ── ФОРМА ── */
+async function submitTribute(btn){
+  const name    = document.getElementById('tribute-name').value.trim();
+  const relation= document.getElementById('tribute-relation').value.trim();
+  const message = document.getElementById('tribute-message').value.trim();
+
+  if(!name || !message){alert('Заполните имя и воспоминание');return;}
+
+  btn.textContent='Отправляю...';
+  btn.disabled=true;
+
+  try{
+    await fetch('https://n8n-production-762f.up.railway.app/webhook/memorial-tribute',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({name,relation,message,date:new Date().toLocaleString('ru')})
+    });
+    btn.textContent='Спасибо!';
+    document.getElementById('tribute-name').value='';
+    document.getElementById('tribute-relation').value='';
+    document.getElementById('tribute-message').value='';
+  }catch(e){
+    btn.textContent='Отправить';
+    btn.disabled=false;
+    alert('Ошибка отправки. Попробуйте позже.');
+  }
+}
+
+/* ── QR ── */
+window.addEventListener('load',()=>{
+  const url=location.href;
+  document.getElementById('qrUrl').textContent=url;
+  new QRCode(document.getElementById('qrCode'),{
+    text:url,width:160,height:160,
+    colorDark:'#0c0a08',colorLight:'#ffffff',
+    correctLevel:QRCode.CorrectLevel.H
+  });
+});
+function dlQR(){
+  const cv=document.querySelector('#qrCode canvas');
+  if(!cv)return;
+  const a=document.createElement('a');
+  a.download='qr-levkina.png';
+  a.href=cv.toDataURL();
+  a.click();
+}
+function cpLink(btn){
+  navigator.clipboard.writeText(location.href).then(()=>{
+    const o=btn.textContent;btn.textContent='Скопировано!';
+    setTimeout(()=>btn.textContent=o,2000);
+  });
+}
+
+/* ── THEME TOGGLE ── */
+(function(){
+  const html = document.documentElement;
+  const btn  = document.getElementById('themeToggle');
+
+  function applyTheme(isLight){
+    html.classList.toggle('light', isLight);
+    heroBG.setMode(isLight ? 'petals' : 'stars');
+  }
+
+  // restore saved preference
+  const saved = localStorage.getItem('v6theme') === 'light';
+  applyTheme(saved);
+
+  btn.addEventListener('click', ()=>{
+    const isLight = !html.classList.contains('light');
+    applyTheme(isLight);
+    localStorage.setItem('v6theme', isLight ? 'light' : 'dark');
+  });
+})();
+</script>
+</body>
+</html>
