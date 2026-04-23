@@ -711,6 +711,7 @@ footer a:hover{color:var(--gold)}
     <div class="glow-ring" id="glowRing"></div>
     <button class="c-btn" id="cBtn" onclick="toggleCandle()">Зажечь свечу</button>
     <div class="c-count">Всего зажжено свечей: <span class="c-count-num" id="cCount">0</span></div>
+    <div class="c-count" style="margin-top:6px">Посетителей страницы: <span class="c-count-num" id="vCount">—</span></div>
   </div>
 </section>
 
@@ -828,6 +829,8 @@ function openLb(el){const img=el.querySelector('img');document.getElementById('l
 function closeLb(){document.getElementById('lb').classList.remove('on')}
 
 /* ── CANDLE ── */
+const N8N_URL='https://n8n-production-762f.up.railway.app/webhook/memorial-counters';
+const PAGE_ID='fedor';
 let candleLit=false;
 let sparkCtx=null;let sparks=[];
 (function(){
@@ -861,17 +864,20 @@ function toggleCandle(){
   btn.classList.toggle('on',candleLit);
   btn.textContent=candleLit?'Свеча горит':'Зажечь свечу';
   if(candleLit){
-    const key='candle_fedor';
-    const n=(parseInt(localStorage.getItem(key)||'0'))+1;
-    localStorage.setItem(key,n);
-    document.getElementById('cCount').textContent=n;
+    fetch(N8N_URL,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({action:'candle',page:PAGE_ID,url:window.location.href})
+    }).then(r=>r.json()).then(d=>{document.getElementById('cCount').textContent=d.candles||0}).catch(()=>{});
     const iv=setInterval(spawnSparks,300);
     setTimeout(()=>clearInterval(iv),3000);
   }
 }
 (function(){
-  const key='candle_fedor';
-  document.getElementById('cCount').textContent=localStorage.getItem(key)||'0';
+  fetch(N8N_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'stats',page:PAGE_ID})})
+    .then(r=>r.json()).then(d=>{
+      document.getElementById('cCount').textContent=d.candles||0;
+      const vc=document.getElementById('vCount');if(vc)vc.textContent=d.visitors||0;
+    }).catch(()=>{});
+  fetch(N8N_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'visit',page:PAGE_ID,url:window.location.href})}).catch(()=>{});
 })();
 
 /* ── TRIBUTE FORM ── */
@@ -889,7 +895,7 @@ async function submitTribute(btn){
     await fetch('https://n8n-production-762f.up.railway.app/webhook/memorial-tribute',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({name,relation,message,date:new Date().toLocaleString('ru'),page:'fedor'})
+      body:JSON.stringify({name,relation,message,date:new Date().toLocaleString('ru'),page:'fedor',url:window.location.href})
     });
     btn.textContent='Спасибо!';
     document.getElementById('tribute-name').value='';

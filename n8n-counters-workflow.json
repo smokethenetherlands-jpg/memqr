@@ -1,0 +1,52 @@
+{
+  "name": "Memorial — Счётчики",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "memorial-counters",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "b1c2d3e4-0001-0001-0001-000000000001",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "webhookId": "memorial-counters"
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $getWorkflowStaticData('global');\nconst body = $json.body || $json;\nconst action = body.action;\nconst page = body.page || 'unknown';\n\nif (!data.visitors) data.visitors = {};\nif (!data.candles) data.candles = {};\n\nif (action === 'visit') {\n  data.visitors[page] = (data.visitors[page] || 0) + 1;\n  return [{json: {ok: true, visitors: data.visitors[page], candles: data.candles[page] || 0}}];\n}\n\nif (action === 'candle') {\n  data.candles[page] = (data.candles[page] || 0) + 1;\n  return [{json: {ok: true, candles: data.candles[page], visitors: data.visitors[page] || 0}}];\n}\n\nif (action === 'stats') {\n  return [{json: {\n    visitors: data.visitors[page] || 0,\n    candles: data.candles[page] || 0\n  }}];\n}\n\nreturn [{json: {error: 'unknown action'}}];"
+      },
+      "id": "b1c2d3e4-0002-0002-0002-000000000002",
+      "name": "Счётчики",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "b1c2d3e4-0003-0003-0003-000000000003",
+      "name": "Ответ",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [680, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [[{"node": "Счётчики", "type": "main", "index": 0}]]
+    },
+    "Счётчики": {
+      "main": [[{"node": "Ответ", "type": "main", "index": 0}]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

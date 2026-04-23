@@ -44,9 +44,11 @@
           "mappingMode": "defineBelow",
           "value": {
             "Дата": "={{ $json.body.date }}",
+            "Страница": "={{ $json.body.page }}",
             "Имя": "={{ $json.body.name }}",
             "Кем приходится": "={{ $json.body.relation }}",
-            "Воспоминание": "={{ $json.body.message }}"
+            "Воспоминание": "={{ $json.body.message }}",
+            "URL": "={{ $json.body.url }}"
           },
           "matchingColumns": [],
           "schema": []
@@ -62,7 +64,7 @@
     {
       "parameters": {
         "chatId": "ВСТАВЬ_СВОЙ_CHAT_ID",
-        "text": "=📝 Новое воспоминание на странице памяти\n\n👤 *{{ $('Webhook').item.json.body.name }}* ({{ $('Webhook').item.json.body.relation }})\n\n💬 {{ $('Webhook').item.json.body.message }}\n\n🕐 {{ $('Webhook').item.json.body.date }}",
+        "text": "=📝 Новое воспоминание\n\n🗂 Страница: *{{ $('Webhook').item.json.body.page }}*\n👤 *{{ $('Webhook').item.json.body.name }}* ({{ $('Webhook').item.json.body.relation }})\n\n💬 {{ $('Webhook').item.json.body.message }}\n\n🔗 {{ $('Webhook').item.json.body.url }}\n🕐 {{ $('Webhook').item.json.body.date }}",
         "additionalFields": {
           "parse_mode": "Markdown"
         }
