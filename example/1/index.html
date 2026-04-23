@@ -875,12 +875,31 @@ function toggleCandle(){
 })();
 
 /* ── TRIBUTE FORM ── */
-function submitTribute(btn){
-  const name=document.getElementById('tribute-name').value.trim();
-  const rel=document.getElementById('tribute-relation').value.trim();
-  const msg=document.getElementById('tribute-message').value.trim();
-  if(!name||!msg){btn.textContent='Заполните имя и текст';setTimeout(()=>{btn.textContent='Отправить'},2000);return}
-  btn.textContent='Спасибо';btn.disabled=true;
+async function submitTribute(btn){
+  const name    = document.getElementById('tribute-name').value.trim();
+  const relation= document.getElementById('tribute-relation').value.trim();
+  const message = document.getElementById('tribute-message').value.trim();
+
+  if(!name || !message){alert('Заполните имя и воспоминание');return;}
+
+  btn.textContent='Отправляю...';
+  btn.disabled=true;
+
+  try{
+    await fetch('https://n8n-production-762f.up.railway.app/webhook/memorial-tribute',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({name,relation,message,date:new Date().toLocaleString('ru')})
+    });
+    btn.textContent='Спасибо!';
+    document.getElementById('tribute-name').value='';
+    document.getElementById('tribute-relation').value='';
+    document.getElementById('tribute-message').value='';
+  }catch(e){
+    btn.textContent='Отправить';
+    btn.disabled=false;
+    alert('Ошибка отправки. Попробуйте позже.');
+  }
 }
 
 /* ── QR ── */
