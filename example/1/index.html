@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="UTF-8"/>
@@ -889,7 +889,7 @@ async function submitTribute(btn){
     await fetch('https://n8n-production-762f.up.railway.app/webhook/memorial-tribute',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({name,relation,message,date:new Date().toLocaleString('ru')})
+      body:JSON.stringify({name,relation,message,date:new Date().toLocaleString('ru'),page:'fedor'})
     });
     btn.textContent='Спасибо!';
     document.getElementById('tribute-name').value='';
