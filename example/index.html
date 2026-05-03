@@ -257,9 +257,10 @@ nav{
 
 /* ── BIO ── */
 .bio-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:64px;align-items:start}
-@media(max-width:700px){.bio-grid{grid-template-columns:1fr}.bio-photo-wrap{position:static;max-width:300px;margin:0 auto}}
+@media(max-width:700px){.bio-grid{grid-template-columns:1fr}.bio-photo-wrap{max-width:300px;margin:0 auto}}
 
-.bio-photo-wrap{position:sticky;top:80px}
+.bio-photo-wrap{position:static}
+@media(min-width:701px){.bio-photo-wrap{position:sticky;top:80px}}
 .bio-photo-frame{
   position:relative;
   border:1px solid var(--border);
