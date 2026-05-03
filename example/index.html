@@ -271,7 +271,7 @@ nav{
   filter:sepia(30%) contrast(1.05);
   transition:.6s;
 }
-@media(max-width:700px){.bio-photo-frame img{height:380px}}
+@media(max-width:700px){.bio-photo-frame img{aspect-ratio:auto;height:auto;object-fit:initial;object-position:initial}}
 .bio-photo-frame:hover img{filter:sepia(10%)}
 .bio-photo-frame::after{
   content:'';position:absolute;inset:0;
