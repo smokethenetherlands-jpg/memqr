@@ -323,7 +323,7 @@ nav{
   grid-template-columns:repeat(3,1fr);
   gap:8px;
 }
-@media(max-width:640px){.gal-grid{grid-template-columns:repeat(2,1fr)}.gal-item{aspect-ratio:auto}.gal-item img{height:auto;object-fit:initial;transform:none}}
+@media(max-width:640px){.gal-grid{grid-template-columns:repeat(2,1fr)}}
 .gal-item{
   position:relative;overflow:hidden;border-radius:var(--r);
   cursor:pointer;aspect-ratio:3/4;border:1px solid var(--border);
@@ -335,6 +335,7 @@ nav{
   filter:sepia(20%);
   transform:scale(1.05);transition:.6s cubic-bezier(.22,1,.36,1);
 }
+@media(max-width:640px){.gal-item{aspect-ratio:auto}.gal-item img{height:auto;object-fit:initial;transform:none}}
 .gal-item:hover img{transform:scale(1);filter:sepia(0%)}
 .gal-overlay{
   position:absolute;inset:0;
