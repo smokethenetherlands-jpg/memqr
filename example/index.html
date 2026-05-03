@@ -323,7 +323,7 @@ nav{
   grid-template-columns:repeat(3,1fr);
   gap:8px;
 }
-@media(max-width:640px){.gal-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.gal-grid{grid-template-columns:repeat(2,1fr)}.gal-item{aspect-ratio:auto}.gal-item img{height:auto;object-fit:initial;transform:none}}
 .gal-item{
   position:relative;overflow:hidden;border-radius:var(--r);
   cursor:pointer;aspect-ratio:3/4;border:1px solid var(--border);
